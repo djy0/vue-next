@@ -400,11 +400,7 @@ function genAssets(
     push(
       `const ${toValidAssetId(id, type)} = ${resolver}(${JSON.stringify(id)})`
     )
-    if (i < assets.length - 1) {
-      newline()
-    } else {
-      push(`\n`)
-    }
+    newline()
   }
 }
 

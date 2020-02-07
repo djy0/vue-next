@@ -5,10 +5,10 @@ describe('ssr: components', () => {
     expect(compile(`<foo id="a" :prop="b" />`).code).toMatchInlineSnapshot(`
       "const { resolveComponent } = require(\\"vue\\")
       const { _ssrRenderComponent } = require(\\"@vue/server-renderer\\")
-
+      
       return function ssrRender(_ctx, _push, _parent) {
         const _component_foo = resolveComponent(\\"foo\\")
-
+        
         _push(_ssrRenderComponent(_component_foo, {
           id: \\"a\\",
           prop: _ctx.b
@@ -22,10 +22,10 @@ describe('ssr: components', () => {
       .toMatchInlineSnapshot(`
       "const { resolveComponent } = require(\\"vue\\")
       const { _ssrRenderComponent } = require(\\"@vue/server-renderer\\")
-
+      
       return function ssrRender(_ctx, _push, _parent) {
         const _component_foo = resolveComponent(\\"foo\\")
-
+        
         _push(_ssrRenderComponent(_component_foo, { prop: \\"b\\" }, null, _parent))
       }"
     `)
@@ -34,10 +34,10 @@ describe('ssr: components', () => {
       .toMatchInlineSnapshot(`
       "const { resolveComponent } = require(\\"vue\\")
       const { _ssrRenderComponent } = require(\\"@vue/server-renderer\\")
-
+      
       return function ssrRender(_ctx, _push, _parent) {
         const _component_compoonent = resolveComponent(\\"compoonent\\")
-
+        
         _push(_ssrRenderComponent(_component_compoonent, {
           is: _ctx.foo,
           prop: \\"b\\"
@@ -51,10 +51,10 @@ describe('ssr: components', () => {
       expect(compile(`<foo>hello<div/></foo>`).code).toMatchInlineSnapshot(`
         "const { resolveComponent } = require(\\"vue\\")
         const { _ssrRenderComponent } = require(\\"@vue/server-renderer\\")
-
+        
         return function ssrRender(_ctx, _push, _parent) {
           const _component_foo = resolveComponent(\\"foo\\")
-
+          
           _push(_ssrRenderComponent(_component_foo, null, {
             default: (_, _push, _parent, _scopeId) => {
               if (_scopeId) {
@@ -74,10 +74,10 @@ describe('ssr: components', () => {
         .toMatchInlineSnapshot(`
         "const { resolveComponent } = require(\\"vue\\")
         const { _ssrRenderComponent, _ssrInterpolate } = require(\\"@vue/server-renderer\\")
-
+        
         return function ssrRender(_ctx, _push, _parent) {
           const _component_foo = resolveComponent(\\"foo\\")
-
+          
           _push(_ssrRenderComponent(_component_foo, null, {
             default: ({ msg }, _push, _parent, _scopeId) => {
               _push(\`\${_ssrInterpolate(msg + _ctx.outer)}\`)
@@ -97,10 +97,10 @@ describe('ssr: components', () => {
       ).toMatchInlineSnapshot(`
         "const { resolveComponent } = require(\\"vue\\")
         const { _ssrRenderComponent } = require(\\"@vue/server-renderer\\")
-
+        
         return function ssrRender(_ctx, _push, _parent) {
           const _component_foo = resolveComponent(\\"foo\\")
-
+          
           _push(_ssrRenderComponent(_component_foo, null, {
             default: (_, _push, _parent, _scopeId) => {
               _push(\`foo\`)
@@ -122,10 +122,10 @@ describe('ssr: components', () => {
       ).toMatchInlineSnapshot(`
         "const { resolveComponent, createSlots } = require(\\"vue\\")
         const { _ssrRenderComponent } = require(\\"@vue/server-renderer\\")
-
+        
         return function ssrRender(_ctx, _push, _parent) {
           const _component_foo = resolveComponent(\\"foo\\")
-
+          
           _push(_ssrRenderComponent(_component_foo, null, createSlots({ _compiled: true }, [
             (_ctx.ok)
               ? {
@@ -148,10 +148,10 @@ describe('ssr: components', () => {
       ).toMatchInlineSnapshot(`
         "const { resolveComponent, renderList, createSlots } = require(\\"vue\\")
         const { _ssrRenderComponent, _ssrInterpolate } = require(\\"@vue/server-renderer\\")
-
+        
         return function ssrRender(_ctx, _push, _parent) {
           const _component_foo = resolveComponent(\\"foo\\")
-
+          
           _push(_ssrRenderComponent(_component_foo, null, createSlots({ _compiled: true }, [
             renderList(_ctx.names, (key) => {
               return {
@@ -190,10 +190,10 @@ describe('ssr: components', () => {
         .toMatchInlineSnapshot(`
         "const { resolveComponent } = require(\\"vue\\")
         const { _ssrRenderComponent } = require(\\"@vue/server-renderer\\")
-
+        
         return function ssrRender(_ctx, _push, _parent) {
           const _component_foo = resolveComponent(\\"foo\\")
-
+          
           _push(_ssrRenderComponent(_component_foo, null, null, _parent))
         }"
       `)

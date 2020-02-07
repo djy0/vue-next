@@ -25,10 +25,10 @@ describe('ssr: scopeId', () => {
     ).toMatchInlineSnapshot(`
       "const { resolveComponent } = require(\\"vue\\")
       const { _ssrRenderComponent } = require(\\"@vue/server-renderer\\")
-
+      
       return function ssrRender(_ctx, _push, _parent) {
         const _component_foo = resolveComponent(\\"foo\\")
-
+        
         _push(_ssrRenderComponent(_component_foo, null, {
           default: (_, _push, _parent, _scopeId) => {
             _push(\`foo\`)
@@ -47,10 +47,10 @@ describe('ssr: scopeId', () => {
     ).toMatchInlineSnapshot(`
       "const { resolveComponent } = require(\\"vue\\")
       const { _ssrRenderComponent } = require(\\"@vue/server-renderer\\")
-
+      
       return function ssrRender(_ctx, _push, _parent) {
         const _component_foo = resolveComponent(\\"foo\\")
-
+        
         _push(_ssrRenderComponent(_component_foo, null, {
           default: (_, _push, _parent, _scopeId) => {
             if (_scopeId) {
@@ -73,11 +73,11 @@ describe('ssr: scopeId', () => {
     ).toMatchInlineSnapshot(`
       "const { resolveComponent } = require(\\"vue\\")
       const { _ssrRenderComponent } = require(\\"@vue/server-renderer\\")
-
+      
       return function ssrRender(_ctx, _push, _parent) {
         const _component_bar = resolveComponent(\\"bar\\")
         const _component_foo = resolveComponent(\\"foo\\")
-
+        
         _push(_ssrRenderComponent(_component_foo, null, {
           default: (_, _push, _parent, _scopeId) => {
             if (_scopeId) {

@@ -169,13 +169,15 @@ describe('e2e: todomvc', () => {
     expect(await count('.todo:not(.completed)')).toBe(3)
   }
 
-  test(
-    'classic',
-    async () => {
-      await testTodomvc('classic')
-    },
-    E2E_TIMEOUT
-  )
+  if (__FEATURE_OPTIONS__) {
+    test(
+      'classic',
+      async () => {
+        await testTodomvc('classic')
+      },
+      E2E_TIMEOUT
+    )
+  }
 
   test(
     'composition',

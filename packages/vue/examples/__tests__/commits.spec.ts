@@ -46,13 +46,15 @@ describe('e2e: commits', () => {
     expect(await count('li .message')).toBe(3)
   }
 
-  test(
-    'classic',
-    async () => {
-      await testCommits('classic')
-    },
-    E2E_TIMEOUT
-  )
+  if (__FEATURE_OPTIONS__) {
+    test(
+      'classic',
+      async () => {
+        await testCommits('classic')
+      },
+      E2E_TIMEOUT
+    )
+  }
 
   test(
     'composition',

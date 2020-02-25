@@ -26,13 +26,15 @@ describe('e2e: markdown', () => {
     )
   }
 
-  test(
-    'classic',
-    async () => {
-      await testMarkdown('classic')
-    },
-    E2E_TIMEOUT
-  )
+  if (__FEATURE_OPTIONS__) {
+    test(
+      'classic',
+      async () => {
+        await testMarkdown('classic')
+      },
+      E2E_TIMEOUT
+    )
+  }
 
   test(
     'composition',

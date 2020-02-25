@@ -13,6 +13,10 @@ import {
 import { mockWarn } from '@vue/shared'
 
 describe('api: options', () => {
+  if (!__FEATURE_OPTIONS__) {
+    test('pass', () => {})
+    return
+  }
   test('data', async () => {
     const Comp = defineComponent({
       data() {

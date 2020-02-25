@@ -3,7 +3,8 @@ import {
   ReactiveEffect,
   shallowReadonly,
   pauseTracking,
-  resetTracking
+  resetTracking,
+  reactive
 } from '@vue/reactivity'
 import {
   PublicInstanceProxyHandlers,
@@ -32,7 +33,8 @@ import {
   isPromise,
   isArray,
   hyphenate,
-  ShapeFlags
+  ShapeFlags,
+  extend
 } from '@vue/shared'
 import { SuspenseBoundary } from './components/Suspense'
 import { CompilerOptions } from '@vue/compiler-core'
@@ -466,13 +468,52 @@ function finishComponentSetup(
     }
   }
 
-  // support for 2.x options
   if (__FEATURE_OPTIONS__) {
+    // support for 2.x options
     currentInstance = instance
     currentSuspense = parentSuspense
     applyOptions(instance, Component)
     currentInstance = null
     currentSuspense = null
+  } else {
+    // copy props, data, components, directives from component to instance object
+    const enum OptionTypes {
+      PROPS = 'Props',
+      DATA = 'Data',
+      COMPUTED = 'Computed',
+      METHODS = 'Methods',
+      INJECT = 'Inject'
+    }
+    function createDuplicateChecker() {
+      const cache = Object.create(null)
+      return (type: OptionTypes, key: string) => {
+        if (cache[key]) {
+          warn(`${type} property "${key}" is already defined in ${cache[key]}.`)
+        } else {
+          cache[key] = type
+        }
+      }
+    }
+    const checkDuplicateProperties = __DEV__ ? createDuplicateChecker() : null
+    const { components, directives, data: dataOptions } = Component
+    components && extend(instance.components, components)
+    directives && extend(instance.directives, directives)
+    const data = isFunction(dataOptions)
+      ? dataOptions.call(instance.proxy)
+      : dataOptions
+    if (!isObject(data)) {
+      __DEV__ && warn(`data() should return an object.`)
+    } else if (instance.data === EMPTY_OBJ) {
+      if (__DEV__) {
+        for (const key in data) {
+          checkDuplicateProperties!(OptionTypes.DATA, key)
+        }
+      }
+      instance.data = reactive(data)
+    } else {
+      // existing data: this is a mixin or extends.
+      extend(instance.data, data)
+    }
   }
 
   if (instance.renderContext === EMPTY_OBJ) {

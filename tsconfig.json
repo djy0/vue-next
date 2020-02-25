@@ -29,6 +29,7 @@
     "packages/runtime-dom/jsx.d.ts",
     "packages/*/src",
     "packages/*/__tests__",
-    "test-dts"
+    "test-dts",
+    "packages/vue/examples/__tests__"
   ]
 }

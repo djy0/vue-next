@@ -496,10 +496,12 @@ describe('KeepAlive', () => {
       assert(1, include ? 2 : 1)
     }
 
-    // 2.x #6938
-    test('should not cache anonymous component when include is specified', async () => {
-      await assertAnonymous(true)
-    })
+    if (__FEATURE_OPTIONS__) {
+      // 2.x #6938
+      test('should not cache anonymous component when include is specified', async () => {
+        await assertAnonymous(true)
+      })
+    }
 
     test('should cache anonymous components if include is not specified', async () => {
       await assertAnonymous(false)

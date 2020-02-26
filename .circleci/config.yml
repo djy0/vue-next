@@ -35,15 +35,6 @@ jobs:
       - *save_cache
       - run: yarn test --ci --runInBand
 
-  test-lean:
-    <<: *defaults
-    steps:
-      - checkout
-      - *restore_cache
-      - *install_deps
-      - *save_cache
-      - run: yarn test-lean --ci --runInBand
-
   test-dts:
     <<: *defaults
     steps:
@@ -67,6 +58,5 @@ workflows:
   ci:
     jobs:
       - test
-      - test-lean
       - test-dts
       - check-size

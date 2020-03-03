@@ -394,8 +394,8 @@ const handlersRE = /^on|^vnode/
 
 export function mergeProps(...args: (Data & VNodeProps)[]) {
   const ret: Data = {}
-  extend(ret, args[0])
-  for (let i = 1; i < args.length; i++) {
+  // extend(ret, args[0])
+  for (let i = 0; i < args.length; i++) {
     const toMerge = args[i]
     for (const key in toMerge) {
       if (key === 'class') {
@@ -420,3 +420,11 @@ export function mergeProps(...args: (Data & VNodeProps)[]) {
   }
   return ret
 }
+// function mergePropsCp(...args: (Data & VNodeProps)[]) {
+//   const ret: Data = {}
+//   ret[0] = args[0]
+//   for (let i = 0; i < args.length; i++) {
+
+//   }
+// }
+// mergePropsCp

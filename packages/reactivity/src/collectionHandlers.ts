@@ -177,7 +177,7 @@ const mutableInstrumentations: Record<string, Function> = {
     return get(this, key, toReactive)
   },
   get size() {
-    return size(this as unknown as IterableCollections)
+    return size((this as unknown) as IterableCollections)
   },
   has,
   add,
@@ -191,8 +191,8 @@ const readonlyInstrumentations: Record<string, Function> = {
   get(this: MapTypes, key: unknown) {
     return get(this, key, toReadonly)
   },
-  get size(this: IterableCollections) {
-    return size(this)
+  get size() {
+    return size((this as unknown) as IterableCollections)
   },
   has,
   add: createReadonlyMethod(add, TriggerOpTypes.ADD),
@@ -238,3 +238,23 @@ export const mutableCollectionHandlers: ProxyHandler<CollectionTypes> = {
 export const readonlyCollectionHandlers: ProxyHandler<CollectionTypes> = {
   get: createInstrumentationGetter(readonlyInstrumentations)
 }
+
+// interface Unimplemented {
+//   calculate(): number;
+// }
+
+// class Demo {
+//   public get a() {
+//   // public get a(this: Unimplemented) {
+//       return this.calculate();
+//   }
+//   public b(this: Unimplemented) {
+//       return this.calculate();
+//   }
+// }
+// const x = new Demo();
+// console.log(x.a); // no type error, fails at runtime
+
+// console.log(x.b()) // correctly gives following error:
+// /* The 'this' context of type 'Demo' is not assignable to method's 'this' of type 'Unimplemented'.
+//    Property 'calculate' is missing in type 'Demo' but required in type 'Unimplemented'.ts(2684) */

@@ -17,6 +17,7 @@ import { toRaw } from '@vue/reactivity'
 import { callWithAsyncErrorHandling, ErrorCodes } from '../errorHandling'
 import { ShapeFlags } from '@vue/shared'
 import { onBeforeUnmount, onMounted } from '../apiLifecycle'
+import { FRAGMENT } from '@vue/compiler-dom/src'
 
 export interface BaseTransitionProps {
   mode?: 'in-out' | 'out-in' | 'default'
@@ -110,11 +111,27 @@ const BaseTransitionImpl = {
       }
 
       // warn multiple elements
-      if (__DEV__ && children.length > 1) {
-        warn(
-          '<transition> can only be used on a single element or component. Use ' +
-            '<transition-group> for lists.'
-        )
+      if (__DEV__) {
+        let shouldWarn = false
+        if (children.length > 1) {
+          shouldWarn = true
+        }
+        // v-for
+        if (children.length === 1 && children[0].type === FRAGMENT) {
+          if (
+            children[0].children &&
+            typeof children[0].children.length === 'number' &&
+            children[0].children.length > 1
+          ) {
+            shouldWarn = true
+          }
+        }
+        if (shouldWarn) {
+          warn(
+            '<transition> can only be used on a single element or component. Use ' +
+              '<transition-group> for lists.'
+          )
+        }
       }
 
       // there's no need to track reactivity for these props so use the raw

@@ -17,13 +17,17 @@ import { transformVText } from './transforms/vText'
 import { transformModel } from './transforms/vModel'
 import { transformOn } from './transforms/vOn'
 import { transformShow } from './transforms/vShow'
+import { warnTransitionChildren } from './transforms/warnTransitionChildren'
 import { stringifyStatic } from './transforms/stringifyStatic'
 
 export const parserOptions = __BROWSER__
   ? parserOptionsMinimal
   : parserOptionsStandard
 
-export const DOMNodeTransforms: NodeTransform[] = [transformStyle]
+export const DOMNodeTransforms: NodeTransform[] = [
+  transformStyle,
+  ...(__DEV__ ? [warnTransitionChildren] : [])
+]
 
 export const DOMDirectiveTransforms: Record<string, DirectiveTransform> = {
   cloak: noopDirectiveTransform,

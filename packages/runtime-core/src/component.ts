@@ -51,7 +51,7 @@ export interface SFCInternalOptions {
   __hmrUpdated?: boolean
 }
 
-export interface FunctionalComponent<P = {}> extends SFCInternalOptions {
+export interface FunctionalComponent<P extends object = {}> extends SFCInternalOptions {
   (props: P, ctx: SetupContext): VNodeChild
   props?: ComponentPropsOptions<P>
   inheritAttrs?: boolean

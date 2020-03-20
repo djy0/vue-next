@@ -110,7 +110,7 @@ function _h(
 
 // functional component
 function _h(type: FunctionalComponent, children?: RawChildren): VNode
-function _h<P>(
+function _h<P extends object>(
   type: FunctionalComponent<P>,
   props?: (RawProps & P) | ({} extends P ? null : never),
   children?: RawChildren | RawSlots
